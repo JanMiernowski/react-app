@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 public class EnterpriseService {
 
     private final DatabaseEnterpriseRepository databaseEnterpriseRepository;
-    private final EnterpriseMapper enterpriseMapper;
+    private final EnterpriseMapper enterpriseMapper = EnterpriseMapper.INSTANCE;
 
-    public EnterpriseService(DatabaseEnterpriseRepository databaseEnterpriseRepository,
-                             EnterpriseMapper enterpriseMapper){
+    public EnterpriseService(DatabaseEnterpriseRepository databaseEnterpriseRepository){
         this.databaseEnterpriseRepository = databaseEnterpriseRepository;
-        this.enterpriseMapper = enterpriseMapper;
+
     }
 
-    public void addEnterprise(EnterpriseDto enterpriseDto){
-        databaseEnterpriseRepository.addToDatabase(enterpriseMapper.toEntity(enterpriseDto));
+    public EnterpriseDto addEnterprise(EnterpriseDto enterpriseDto){
+        Enterprise entity = databaseEnterpriseRepository.addToDatabase(enterpriseMapper.toEntity(enterpriseDto));
+        return enterpriseMapper.toDto(entity);
     }
 
     public void deleteEnterpriseById(Long id){

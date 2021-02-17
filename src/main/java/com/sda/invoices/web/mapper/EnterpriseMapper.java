@@ -4,8 +4,10 @@ import com.sda.invoices.domain.contractor.enterprise.Enterprise;
 import com.sda.invoices.web.dto.EnterpriseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface EnterpriseMapper {
 
     EnterpriseMapper INSTANCE = Mappers.getMapper(EnterpriseMapper.class);

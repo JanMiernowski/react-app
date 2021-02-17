@@ -1,13 +1,35 @@
 package com.sda.invoices.domain.contractor.enterprise;
 
-import com.sda.invoices.domain.contractor.DatabaseContractorRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-public class DatabaseEnterpriseRepository extends DatabaseContractorRepository<Enterprise, Long> {
+import java.util.Optional;
 
-    public DatabaseEnterpriseRepository(JpaRepository<Enterprise, Long> jpaRepository) {
-        super(jpaRepository);
+@Component
+@RequiredArgsConstructor
+public class DatabaseEnterpriseRepository implements EnterpriseRepository {
+
+    private final JpaEnterpriseRepository jpaEnterpriseRepository;
+
+    @Override
+    public Enterprise addToDatabase(Enterprise enterprise) {
+        return jpaEnterpriseRepository.save(enterprise);
+    }
+
+    @Override
+    public void removeFromDatabase(Long id) {
+        jpaEnterpriseRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(Enterprise enterprise) {
+        if(enterprise.getId()!=null){
+            jpaEnterpriseRepository.save(enterprise);
+        }
+    }
+
+    @Override
+    public Optional<Enterprise> findById(Long id) {
+        return jpaEnterpriseRepository.findById(id);
     }
 }

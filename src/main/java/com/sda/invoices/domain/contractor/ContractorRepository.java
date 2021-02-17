@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public interface ContractorRepository<ENTITY extends Contractor, ID> {
 
-    void addToDatabase(ENTITY entity);
+    ENTITY addToDatabase(ENTITY entity);
     void removeFromDatabase(ID id);
     void update(ENTITY entity);
     Optional<ENTITY> findById(ID id);

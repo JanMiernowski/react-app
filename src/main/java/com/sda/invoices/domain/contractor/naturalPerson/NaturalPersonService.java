@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 public class NaturalPersonService {
 
     private final DatabaseNaturalPersonRepository databaseContractorRepository;
-    private final NaturalPersonMapper naturalPersonMapper;
+    private final NaturalPersonMapper naturalPersonMapper = NaturalPersonMapper.INSTANCE;
 
-    public NaturalPersonService(DatabaseNaturalPersonRepository databaseContractorRepository,
-                                NaturalPersonMapper naturalPersonMapper) {
+    public NaturalPersonService(DatabaseNaturalPersonRepository databaseContractorRepository) {
         this.databaseContractorRepository = databaseContractorRepository;
-        this.naturalPersonMapper = naturalPersonMapper;
+
     }
 
-    public void addNaturalPerson(NaturalPersonDto dto){
-        databaseContractorRepository.addToDatabase(naturalPersonMapper.toEntity(dto));
+    public NaturalPersonDto addNaturalPerson(NaturalPersonDto dto){
+        NaturalPerson entity = databaseContractorRepository.addToDatabase(naturalPersonMapper.toEntity(dto));
+        return naturalPersonMapper.toDto(entity);
     }
 
     public void deleteNaturalPersonById(Long id){

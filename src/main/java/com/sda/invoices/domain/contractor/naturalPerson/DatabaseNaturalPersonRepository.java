@@ -1,14 +1,35 @@
 package com.sda.invoices.domain.contractor.naturalPerson;
 
-import com.sda.invoices.domain.contractor.DatabaseContractorRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-public class DatabaseNaturalPersonRepository extends DatabaseContractorRepository<NaturalPerson, Long>{
+import java.util.Optional;
 
-    public DatabaseNaturalPersonRepository(JpaRepository<NaturalPerson, Long> jpaRepository) {
-        super(jpaRepository);
+@Component
+@RequiredArgsConstructor
+public class DatabaseNaturalPersonRepository implements NaturalPersonRepository{
+
+    private final JpaNaturalPersonRepository jpaNaturalPersonRepository;
+
+    @Override
+    public NaturalPerson addToDatabase(NaturalPerson naturalPerson) {
+        return jpaNaturalPersonRepository.save(naturalPerson);
     }
 
+    @Override
+    public void removeFromDatabase(Long id) {
+        jpaNaturalPersonRepository.deleteById(id);
+    }
+
+    @Override
+    public void update(NaturalPerson naturalPerson) {
+        if(naturalPerson.getId()!=null){
+            jpaNaturalPersonRepository.save(naturalPerson);
+        }
+    }
+
+    @Override
+    public Optional<NaturalPerson> findById(Long id) {
+        return jpaNaturalPersonRepository.findById(id);
+    }
 }
