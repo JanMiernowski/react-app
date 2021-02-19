@@ -3,6 +3,7 @@ package com.sda.invoices.domain.contractor.enterprise;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -31,5 +32,10 @@ public class DatabaseEnterpriseRepository implements EnterpriseRepository {
     @Override
     public Optional<Enterprise> findById(Long id) {
         return jpaEnterpriseRepository.findById(id);
+    }
+
+    @Override
+    public List<Enterprise> findAllEnterprises() {
+        return jpaEnterpriseRepository.findAll();
     }
 }

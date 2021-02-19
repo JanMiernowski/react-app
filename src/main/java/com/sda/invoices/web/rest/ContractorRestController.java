@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/contractor")
 @AllArgsConstructor
@@ -30,6 +32,13 @@ public class ContractorRestController {
     public ResponseEntity<NaturalPersonDto> addNaturalPerson(@RequestBody NaturalPersonDto dto) {
         NaturalPersonDto savedDto = naturalPersonService.addNaturalPerson(dto);
         return ResponseEntity.ok(savedDto);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/showAllEnterprises")
+    @RequestMapping
+    public List<EnterpriseDto> showAllEnterprises(){
+        return enterpriseService.findAllEnterprises();
     }
 
 }

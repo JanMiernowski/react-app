@@ -4,6 +4,9 @@ import com.sda.invoices.web.dto.EnterpriseDto;
 import com.sda.invoices.web.mapper.EnterpriseMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EnterpriseService {
 
@@ -31,6 +34,13 @@ public class EnterpriseService {
 
     public void updateEnterprise(EnterpriseDto dto){
         databaseEnterpriseRepository.update(enterpriseMapper.toEntity(dto));
+    }
+
+    public List<EnterpriseDto> findAllEnterprises(){
+        List<Enterprise> entities = databaseEnterpriseRepository.findAllEnterprises();
+        return entities.stream()
+                .map(entity -> enterpriseMapper.toDto(entity))
+                .collect(Collectors.toList());
     }
 
 }

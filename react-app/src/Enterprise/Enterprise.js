@@ -1,6 +1,8 @@
 import React from "react";
 import {Form, Input, Label} from "reactstrap";
 import axios from "axios";
+import SingleEnterprise from "../SingleEnterprise/SingleEnterprise";
+import SingleEmployee from "../SingleEmployee/SingleEmployee";
 
 class Enterprise extends React.Component{
 
@@ -18,10 +20,40 @@ class Enterprise extends React.Component{
             bank: '',
             address: '',
             taxNumber: '',
+            // enterprises : [{
+            //     enterpriseName: '',
+            //     email: '',
+            //     bank: '',
+            //     address: '',
+            //     taxNumber: '',
+            // }],
+            enterprises : [{
+                id: '',
+                employee_name: '',
+                employee_salary: '',
+                employee_age: '',
+                profile_image: '',
+            }],
+
         }
 
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    async componentDidMount() {
+        try {
+            // const response = await axios.get('http://localhost:8080/contractor/showAllEnterprises');
+            const response = await axios.get('http://dummy.restapiexample.com/api/v1/employees');
+            console.log(response);
+            const enterprises = response.data.data;
+            this.setState({
+                enterprises: enterprises,
+            });
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     async handleOnSubmit(event) {
@@ -45,8 +77,38 @@ class Enterprise extends React.Component{
 
 
     render() {
+
+        let enterprises = null;
+
+        enterprises = this.state.enterprises.map(enterprise =>{
+            return(
+                  // <SingleEnterprise enterpriseName={enterprise.enterpriseName}
+                  //                   email={enterprise.email}
+                  //                   bank={enterprise.bank}
+                  //                   address={enterprise.address}
+                  //                   taxNumber={enterprise.taxNumber}  />
+                /*
+                id: null,
+                employee_name: '',
+                employee_salary: 0,
+                employee_age: 0,
+                profile_image: '',
+                 */
+
+                <SingleEmployee id={enterprise.id}
+                                employee_name={enterprise.employee_name}
+                                employee_salary={enterprise.employee_salary}
+                                employee_age={enterprise.employee_age}
+                                profile_image={enterprise.profile_image}
+                />
+            )
+        })
+
         return(
             <div className={'login-form'}>
+
+                {enterprises}
+
                 <Form onSubmit={this.handleOnSubmit}>
                     <Label>
                         <h2 className={'text-center'}>Nazwa firmy:</h2>
