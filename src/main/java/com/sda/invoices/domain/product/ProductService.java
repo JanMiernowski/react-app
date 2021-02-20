@@ -3,6 +3,8 @@ package com.sda.invoices.domain.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -13,4 +15,11 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        productRepository.deleteById(id);
+    }
 }

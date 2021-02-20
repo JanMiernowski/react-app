@@ -20,20 +20,20 @@ class Enterprise extends React.Component{
             bank: '',
             address: '',
             taxNumber: '',
-            // enterprises : [{
-            //     enterpriseName: '',
-            //     email: '',
-            //     bank: '',
-            //     address: '',
-            //     taxNumber: '',
-            // }],
             enterprises : [{
-                id: '',
-                employee_name: '',
-                employee_salary: '',
-                employee_age: '',
-                profile_image: '',
+                enterpriseName: '',
+                email: '',
+                bank: '',
+                address: '',
+                taxNumber: '',
             }],
+            // enterprises : [{
+            //     id: '',
+            //     employee_name: '',
+            //     employee_salary: '',
+            //     employee_age: '',
+            //     profile_image: '',
+            // }],
 
         }
 
@@ -44,8 +44,7 @@ class Enterprise extends React.Component{
 
     async componentDidMount() {
         try {
-            // const response = await axios.get('http://localhost:8080/contractor/showAllEnterprises');
-            const response = await axios.get('http://dummy.restapiexample.com/api/v1/employees');
+            const response = await axios.get('http://localhost:8080/contractor/showAllEnterprises');
             console.log(response);
             const enterprises = response.data.data;
             this.setState({
@@ -59,9 +58,7 @@ class Enterprise extends React.Component{
     async handleOnSubmit(event) {
         event.preventDefault(); //nie wiem co to
         try {
-            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', this.state).then(response => {
-                console.log(response)
-            });
+            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', this.state);
             alert('saved enterprise ' + savedEnterprise.data);
             console.info('saved enterprise ', savedEnterprise.data);
         } catch (error) {
@@ -82,25 +79,11 @@ class Enterprise extends React.Component{
 
         enterprises = this.state.enterprises.map(enterprise =>{
             return(
-                  // <SingleEnterprise enterpriseName={enterprise.enterpriseName}
-                  //                   email={enterprise.email}
-                  //                   bank={enterprise.bank}
-                  //                   address={enterprise.address}
-                  //                   taxNumber={enterprise.taxNumber}  />
-                /*
-                id: null,
-                employee_name: '',
-                employee_salary: 0,
-                employee_age: 0,
-                profile_image: '',
-                 */
-
-                <SingleEmployee id={enterprise.id}
-                                employee_name={enterprise.employee_name}
-                                employee_salary={enterprise.employee_salary}
-                                employee_age={enterprise.employee_age}
-                                profile_image={enterprise.profile_image}
-                />
+                  <SingleEnterprise enterpriseName={enterprise.enterpriseName}
+                                    email={enterprise.email}
+                                    bank={enterprise.bank}
+                                    address={enterprise.address}
+                                    taxNumber={enterprise.taxNumber}  />
             )
         })
 

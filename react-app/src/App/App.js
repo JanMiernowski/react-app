@@ -5,12 +5,13 @@ import Ticker from "../Ticker/Ticker";
 import AddProduct from "../AddProduct/AddProduct";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Contractor from "../Contractor/Contractor";
+import ProductList from "../ProductList/ProductList";
 
 class App extends React.Component{
     render(){
         return(
             <div>
-                <Contractor />
+                <ProductList />
             </div>
         );
     }
