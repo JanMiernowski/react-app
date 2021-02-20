@@ -34,7 +34,7 @@ public class ContractorRestController {
         return ResponseEntity.ok(savedDto);
     }
 
-    @CrossOrigin(origins = "*")
+
     @GetMapping("/showAllEnterprises")
     @RequestMapping
     public List<EnterpriseDto> showAllEnterprises(){

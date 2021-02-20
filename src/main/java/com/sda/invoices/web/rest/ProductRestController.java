@@ -15,11 +15,18 @@ public class ProductRestController {
 
     private final ProductService productService;
 
-    @CrossOrigin(origins = "*")
     @PostMapping
     public ResponseEntity<ProductDto> create(@RequestBody ProductDto dto) {
-        Product entity = ProductMapper.INSTANCE.toEntity(dto);
+        return save(dto);
+    }
 
+    @PutMapping
+    public ResponseEntity<ProductDto> update(@RequestBody ProductDto dto) {
+        return save(dto);
+    }
+
+    private ResponseEntity<ProductDto> save(ProductDto dto) {
+        Product entity = ProductMapper.INSTANCE.toEntity(dto);
         ProductDto savedDto = ProductMapper.INSTANCE.toDto(productService.save(entity));
         return ResponseEntity.ok(savedDto);
     }
