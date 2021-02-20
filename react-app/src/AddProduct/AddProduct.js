@@ -2,6 +2,7 @@ import React from "react";
 import VAT from "../Constants";
 import axios from "axios";
 import {Button, Form, FormGroup, Input, Label, Col} from "reactstrap";
+import {withRouter} from "react-router";
 
 
 class AddProduct extends React.Component {
@@ -18,17 +19,19 @@ class AddProduct extends React.Component {
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
         this.renderVat = this.renderVat.bind(this);
+
+        console.info(this.props)
     }
 
     async handleOnSubmit(event) {
         event.preventDefault();
         try {
             const savedProduct = await axios.post('http://localhost:8080/products', this.state);
-            alert('saved product ' + savedProduct.data);
             console.info('saved product ', savedProduct.data);
         } catch (error) {
             console.error(error);
         }
+        this.props.history.push('/products');
     }
 
     handleOnChange(event) {
@@ -104,4 +107,4 @@ class AddProduct extends React.Component {
     }
 }
 
-export default AddProduct;
+export default withRouter(AddProduct);

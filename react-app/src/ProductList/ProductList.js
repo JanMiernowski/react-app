@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import {Table, Button} from "reactstrap";
+import './ProductList.css'
+import { withRouter } from "react-router";
+import AddProduct from "../AddProduct/AddProduct";
 
 class ProductList extends React.Component {
 
@@ -12,6 +15,8 @@ class ProductList extends React.Component {
 
         this.renderRows = this.renderRows.bind(this);
         this.handleOnDelete = this.handleOnDelete.bind(this);
+        this.handleAdd = this.handleAdd.bind(this);
+        this.handleOnEdit = this.handleOnEdit.bind(this);
     }
 
     componentDidMount() {
@@ -39,6 +44,16 @@ class ProductList extends React.Component {
         }
     }
 
+    handleAdd() {
+        this.props.history.push('/products/add');
+    }
+
+
+    handleOnEdit(event) {
+        const id = event.target.getAttribute('selectedid');
+        this.props.history.push('/products/' + id);
+    }
+
     renderRows() {
 
         return this.state.products.map(element => {
@@ -50,7 +65,7 @@ class ProductList extends React.Component {
                     <td>{element.priceNet}</td>
                     <td>{element.vat}</td>
                     <td>
-                        <Button color={'info'}>Edycja</Button>
+                        <Button selectedid={element.id} color={'info'} onClick={this.handleOnEdit}>Edycja</Button>
                         <span>&nbsp;&nbsp;</span>
                         <Button selectedid={element.id} color={'danger'} onClick={this.handleOnDelete}>Usuń</Button>
                     </td>
@@ -70,6 +85,7 @@ class ProductList extends React.Component {
 
         return (
             <div>
+                <Button className={'add-product-button'} color={'success'} onClick={this.handleAdd}>Dodaj produkt</Button>
                 <Table hover>
                     <thead>
                     <tr>
@@ -88,6 +104,7 @@ class ProductList extends React.Component {
             </div>
         );
     }
+
 }
 
-export default ProductList;
+export default withRouter(ProductList);
