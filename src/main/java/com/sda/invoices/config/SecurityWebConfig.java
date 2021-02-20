@@ -16,4 +16,6 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .httpBasic();
     }
+
+
 }

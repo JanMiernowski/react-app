@@ -3,6 +3,7 @@ import {Form, Input, Label} from "reactstrap";
 import axios from "axios";
 import SingleEnterprise from "../SingleEnterprise/SingleEnterprise";
 import SingleEmployee from "../SingleEmployee/SingleEmployee";
+import { Formik } from 'formik'
 
 class Enterprise extends React.Component{
 
@@ -56,13 +57,10 @@ class Enterprise extends React.Component{
         }
     }
 
-    async handleOnSubmit(event) {
-        event.preventDefault(); //nie wiem co to
+    async handleOnSubmit(values) {
+//        event.preventDefault(); //nie wiem co to
         try {
-            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', this.state).then(response => {
-                console.log(response)
-            });
-            alert('saved enterprise ' + savedEnterprise.data);
+            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', values);
             console.info('saved enterprise ', savedEnterprise.data);
         } catch (error) {
             console.error(error);
@@ -109,35 +107,48 @@ class Enterprise extends React.Component{
 
                 {enterprises}
 
-                <Form onSubmit={this.handleOnSubmit}>
-                    <Label>
-                        <h2 className={'text-center'}>Nazwa firmy:</h2>
-                        <Input name={'enterpriseName'} value={this.state.enterpriseName} onChange={this.handleOnChange}/>
-                    </Label>
+                <Formik
+                  initialValues={this.state}
+                  onSubmit={this.handleOnSubmit}
+                >
+                    {
+                        ({
+                           values,
+                           handleChange,
+                           handleOnSubmit,
+                        }) => (
+                            <Form onSubmit={handleOnSubmit}>
+                                <Label>
+                                    <h2 className={'text-center'}>Nazwa firmy:</h2>
+                                    <Input name={'enterpriseName'} value={values.enterpriseName} onChange={handleChange}/>
+                                </Label>
 
-                    <Label>
-                        <h2 className={'text-center'}>Email:</h2>
-                        <Input name={'email'} value={this.state.email} onChange={this.handleOnChange}/>
-                    </Label>
+                                <Label>
+                                    <h2 className={'text-center'}>Email:</h2>
+                                    <Input name={'email'} value={values.email} onChange={handleChange}/>
+                                </Label>
 
-                    <Label>
-                        <h2 className={'text-center'}>Bank:</h2>
-                        <Input name={'bank'} value={this.state.bank} onChange={this.handleOnChange}/>
-                    </Label>
+                                <Label>
+                                    <h2 className={'text-center'}>Bank:</h2>
+                                    <Input name={'bank'} value={values.bank} onChange={handleChange}/>
+                                </Label>
 
-                    <Label>
-                        <h2 className={'text-center'}>Adres:</h2>
-                        <Input name={'address'} value={this.state.address} onChange={this.handleOnChange}/>
-                    </Label>
+                                <Label>
+                                    <h2 className={'text-center'}>Adres:</h2>
+                                    <Input name={'address'} value={values.address} onChange={handleChange}/>
+                                </Label>
 
-                    <Label>
-                        <h2 className={'text-center'}>NIP:</h2>
-                        <Input name={'taxNumber'} value={this.state.taxNumber}
-                               onChange={this.handleOnChange}/>
-                    </Label>
+                                <Label>
+                                    <h2 className={'text-center'}>NIP:</h2>
+                                    <Input name={'taxNumber'} value={values.taxNumber}
+                                           onChange={handleChange}/>
+                                </Label>
 
-                    <input className={'btn-lg btn-dark btn-block'} type="submit" value='Dodaj'/>
-                </Form>
+                                <button className={'btn-lg btn-dark btn-block'} type="submit">Dodaj</button>
+                            </Form>
+                        )
+                    }
+                </Formik>
             </div>
         );
     }
