@@ -3,7 +3,6 @@ import {Form, Input, Label} from "reactstrap";
 import axios from "axios";
 import SingleEnterprise from "../SingleEnterprise/SingleEnterprise";
 import SingleEmployee from "../SingleEmployee/SingleEmployee";
-import { Formik } from 'formik'
 
 class Enterprise extends React.Component{
 
@@ -21,20 +20,20 @@ class Enterprise extends React.Component{
             bank: '',
             address: '',
             taxNumber: '',
-            // enterprises : [{
-            //     enterpriseName: '',
-            //     email: '',
-            //     bank: '',
-            //     address: '',
-            //     taxNumber: '',
-            // }],
             enterprises : [{
-                id: '',
-                employee_name: '',
-                employee_salary: '',
-                employee_age: '',
-                profile_image: '',
+                enterpriseName: '',
+                email: '',
+                bank: '',
+                address: '',
+                taxNumber: '',
             }],
+            // enterprises : [{
+            //     id: '',
+            //     employee_name: '',
+            //     employee_salary: '',
+            //     employee_age: '',
+            //     profile_image: '',
+            // }],
 
         }
 
@@ -45,8 +44,7 @@ class Enterprise extends React.Component{
 
     async componentDidMount() {
         try {
-            // const response = await axios.get('http://localhost:8080/contractor/showAllEnterprises');
-            const response = await axios.get('http://dummy.restapiexample.com/api/v1/employees');
+            const response = await axios.get('http://localhost:8080/contractor/showAllEnterprises');
             console.log(response);
             const enterprises = response.data.data;
             this.setState({
@@ -57,10 +55,11 @@ class Enterprise extends React.Component{
         }
     }
 
-    async handleOnSubmit(values) {
-//        event.preventDefault(); //nie wiem co to
+    async handleOnSubmit(event) {
+        event.preventDefault(); //nie wiem co to
         try {
-            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', values);
+            const savedEnterprise = await axios.post('http://localhost:8080/contractor/addEnterprise', this.state);
+            alert('saved enterprise ' + savedEnterprise.data);
             console.info('saved enterprise ', savedEnterprise.data);
         } catch (error) {
             console.error(error);
@@ -80,25 +79,11 @@ class Enterprise extends React.Component{
 
         enterprises = this.state.enterprises.map(enterprise =>{
             return(
-                  // <SingleEnterprise enterpriseName={enterprise.enterpriseName}
-                  //                   email={enterprise.email}
-                  //                   bank={enterprise.bank}
-                  //                   address={enterprise.address}
-                  //                   taxNumber={enterprise.taxNumber}  />
-                /*
-                id: null,
-                employee_name: '',
-                employee_salary: 0,
-                employee_age: 0,
-                profile_image: '',
-                 */
-
-                <SingleEmployee id={enterprise.id}
-                                employee_name={enterprise.employee_name}
-                                employee_salary={enterprise.employee_salary}
-                                employee_age={enterprise.employee_age}
-                                profile_image={enterprise.profile_image}
-                />
+                  <SingleEnterprise enterpriseName={enterprise.enterpriseName}
+                                    email={enterprise.email}
+                                    bank={enterprise.bank}
+                                    address={enterprise.address}
+                                    taxNumber={enterprise.taxNumber}  />
             )
         })
 
@@ -107,48 +92,35 @@ class Enterprise extends React.Component{
 
                 {enterprises}
 
-                <Formik
-                  initialValues={this.state}
-                  onSubmit={this.handleOnSubmit}
-                >
-                    {
-                        ({
-                           values,
-                           handleChange,
-                           handleOnSubmit,
-                        }) => (
-                            <Form onSubmit={handleOnSubmit}>
-                                <Label>
-                                    <h2 className={'text-center'}>Nazwa firmy:</h2>
-                                    <Input name={'enterpriseName'} value={values.enterpriseName} onChange={handleChange}/>
-                                </Label>
+                <Form onSubmit={this.handleOnSubmit}>
+                    <Label>
+                        <h2 className={'text-center'}>Nazwa firmy:</h2>
+                        <Input name={'enterpriseName'} value={this.state.enterpriseName} onChange={this.handleOnChange}/>
+                    </Label>
 
-                                <Label>
-                                    <h2 className={'text-center'}>Email:</h2>
-                                    <Input name={'email'} value={values.email} onChange={handleChange}/>
-                                </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Email:</h2>
+                        <Input name={'email'} value={this.state.email} onChange={this.handleOnChange}/>
+                    </Label>
 
-                                <Label>
-                                    <h2 className={'text-center'}>Bank:</h2>
-                                    <Input name={'bank'} value={values.bank} onChange={handleChange}/>
-                                </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Bank:</h2>
+                        <Input name={'bank'} value={this.state.bank} onChange={this.handleOnChange}/>
+                    </Label>
 
-                                <Label>
-                                    <h2 className={'text-center'}>Adres:</h2>
-                                    <Input name={'address'} value={values.address} onChange={handleChange}/>
-                                </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Adres:</h2>
+                        <Input name={'address'} value={this.state.address} onChange={this.handleOnChange}/>
+                    </Label>
 
-                                <Label>
-                                    <h2 className={'text-center'}>NIP:</h2>
-                                    <Input name={'taxNumber'} value={values.taxNumber}
-                                           onChange={handleChange}/>
-                                </Label>
+                    <Label>
+                        <h2 className={'text-center'}>NIP:</h2>
+                        <Input name={'taxNumber'} value={this.state.taxNumber}
+                               onChange={this.handleOnChange}/>
+                    </Label>
 
-                                <button className={'btn-lg btn-dark btn-block'} type="submit">Dodaj</button>
-                            </Form>
-                        )
-                    }
-                </Formik>
+                    <input className={'btn-lg btn-dark btn-block'} type="submit" value='Dodaj'/>
+                </Form>
             </div>
         );
     }

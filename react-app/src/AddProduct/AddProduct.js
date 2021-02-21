@@ -1,7 +1,8 @@
 import React from "react";
 import VAT from "../Constants";
 import axios from "axios";
-import {Button, Form, FormGroup, Input, Label} from "reactstrap";
+import {Button, Form, FormGroup, Input, Label, Col} from "reactstrap";
+import {withRouter} from "react-router";
 
 
 class AddProduct extends React.Component {
@@ -18,17 +19,19 @@ class AddProduct extends React.Component {
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
         this.renderVat = this.renderVat.bind(this);
+
+        console.info(this.props)
     }
 
     async handleOnSubmit(event) {
         event.preventDefault();
         try {
             const savedProduct = await axios.post('http://localhost:8080/products', this.state);
-            alert('saved product ' + savedProduct.data);
             console.info('saved product ', savedProduct.data);
         } catch (error) {
             console.error(error);
         }
+        this.props.history.push('/products');
     }
 
     handleOnChange(event) {
@@ -53,12 +56,16 @@ class AddProduct extends React.Component {
             )
         }
         return (
-            <Label>
-                Vat:
-                <select name={'vat'} value={this.state.vat} onChange={this.handleOnChange}>
-                    {options}
-                </select>
-            </Label>
+            <FormGroup row>
+                <Label for={'vat'} sm={3}>
+                    Vat:
+                </Label>
+                <Col sm={9}>
+                    <Input type={'select'} name={'vat'} value={this.state.vat} onChange={this.handleOnChange}>
+                        {options}
+                    </Input>
+                </Col>
+            </FormGroup>
         );
     }
 
@@ -67,27 +74,37 @@ class AddProduct extends React.Component {
         return (
 
             <div className={'login-form'}>
-                <FormGroup onSubmit={this.handleOnSubmit}>
-                    <Label>
-                        <h2 className={'text-center'}>Nazwa:</h2>
-                        <Input name={'name'} value={this.state.name} onChange={this.handleOnChange}/>
-                    </Label>
-                    <Label>
-                        <h2 className={'text-center'}>Opis:</h2>
-                        <Input name={'description'} value={this.state.description} onChange={this.handleOnChange}/>
-                    </Label>
-                    <Label>
-                        <h2 className={'text-center'}>Cena:</h2>
-                        <Input name={'priceNet'} value={this.state.priceNet} onChange={this.handleOnChange}/>
-                    </Label>
-                        {this.renderVat()}
+                <Form onSubmit={this.handleOnSubmit}>
+
+                    <FormGroup row>
+                        <Label sm={3} for={'name'}>Nazwa:</Label>
+                        <Col sm={9}>
+                            <Input name={'name'} value={this.state.name} onChange={this.handleOnChange}/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label sm={3} for={'description'}>Opis:</Label>
+                        <Col sm={9}>
+                            <Input name={'description'} value={this.state.description} onChange={this.handleOnChange}/>
+                        </Col>
+                    </FormGroup>
+
+                    <FormGroup row>
+                        <Label sm={3} for={'priceNet'}>Cena:</Label>
+                        <Col sm={9}>
+                            <Input name={'priceNet'} value={this.state.priceNet} onChange={this.handleOnChange}/>
+                        </Col>
+                    </FormGroup>
+
+                    {this.renderVat()}
 
                     <Input className={'btn-lg btn-dark btn-block'} type='submit' value='Dodaj'/>
-                </FormGroup>
+
+                </Form>
             </div>
         );
     }
-
 }
 
-export default AddProduct;
+export default withRouter(AddProduct);
