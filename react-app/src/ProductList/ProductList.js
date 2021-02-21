@@ -3,7 +3,7 @@ import axios from "axios";
 import {Table, Button} from "reactstrap";
 import './ProductList.css'
 import { withRouter } from "react-router";
-import AddProduct from "../AddProduct/AddProduct";
+import Product from "../Product/Product";
 
 class ProductList extends React.Component {
 
@@ -85,7 +85,9 @@ class ProductList extends React.Component {
 
         return (
             <div>
-                <Button className={'add-product-button'} color={'success'} onClick={this.handleAdd}>Dodaj produkt</Button>
+                <div className={'add-product-button-container'}>
+                    <Button className={'add-product-button'} color={'success'} onClick={this.handleAdd}>Dodaj produkt</Button>
+                </div>
                 <Table hover>
                     <thead>
                     <tr>

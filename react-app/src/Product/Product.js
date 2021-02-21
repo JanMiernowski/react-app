@@ -5,7 +5,7 @@ import {Button, Form, FormGroup, Input, Label, Col} from "reactstrap";
 import {withRouter} from "react-router";
 
 
-class AddProduct extends React.Component {
+class Product extends React.Component {
     constructor(props) {
         super(props);
 
@@ -14,22 +14,52 @@ class AddProduct extends React.Component {
             description: '',
             priceNet: 0,
             vat: '',
+            id: props.match.params.productId,
         }
 
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
         this.renderVat = this.renderVat.bind(this);
 
-        console.info(this.props)
+        console.info(this.props);
+    }
+
+    async componentDidMount() {
+        if(this.state.id){
+            try{
+                const response = await axios.get(`http://localhost:8080/products/${this.state.id}`);
+                this.setState({
+                    ...response.data
+                    }
+                )
+            }catch (error){
+                console.error(error);
+            }
+        }
+        // if(!this.state.id){ }
     }
 
     async handleOnSubmit(event) {
         event.preventDefault();
+
         try {
-            const savedProduct = await axios.post('http://localhost:8080/products', this.state);
+            let savedProduct;
+            if(this.state.id){
+                savedProduct = await axios.put(`http://localhost:8080/products`, this.state);
+            }else {
+                savedProduct = await axios.post('http://localhost:8080/products', this.state);
+            }
             console.info('saved product ', savedProduct.data);
+            this.props.onSave({
+                message : `Produkt o id ${savedProduct.data.id} został pomyślnie zapisany`,
+                isError : false
+            });
         } catch (error) {
             console.error(error);
+            this.props.onSave({
+                message : `Produkt nie został zapisany. Błąd: ${error}`,
+                isError : true
+            });
         }
         this.props.history.push('/products');
     }
@@ -107,4 +137,4 @@ class AddProduct extends React.Component {
     }
 }
 
-export default withRouter(AddProduct);
+export default withRouter(Product);
