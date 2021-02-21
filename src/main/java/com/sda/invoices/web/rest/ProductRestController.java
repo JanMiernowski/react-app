@@ -44,6 +44,11 @@ public class ProductRestController {
         productService.deleteById(id);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(productMapper.toDto(productService.findById(id)));
+    }
+
     private ResponseEntity<ProductDto> save(ProductDto dto) {
         Product entity = productMapper.toEntity(dto);
         ProductDto savedDto = productMapper.toDto(productService.save(entity));
