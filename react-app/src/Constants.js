@@ -8,4 +8,8 @@ const VAT = [
         value: 23,
     }
 ]
-export default VAT;
+
+const SERVER_URL = 'http://localhost:8080/';
+export {
+    VAT, SERVER_URL
+};

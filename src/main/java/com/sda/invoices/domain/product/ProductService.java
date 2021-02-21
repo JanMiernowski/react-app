@@ -1,5 +1,6 @@
 package com.sda.invoices.domain.product;
 
+import com.sda.invoices.web.dto.ProductSearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,13 @@ public class ProductService {
 
     public void deleteById(Long id) {
         productRepository.deleteById(id);
+    }
+
+    public Product findById(Long id) {
+        return productRepository.getOne(id);
+    }
+
+    public List<Product> search(ProductSearchDto dto) {
+        return productRepository.findAll(ProductSpecifications.customerSearch(dto));
     }
 }

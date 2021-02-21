@@ -2,4 +2,10 @@
     float: right;
     margin-bottom: 10px;
     margin-top: 10px;
+    font-size: 1.75rem;
+}
+
+.add-product-button-container{
+    display: flex;
+    justify-content: center;
 }
