@@ -9,6 +9,10 @@ async function getProduct(id){
 
 //todo reszta wywolan api
 
+async function search(name){
+    return (await axios.get(PRODUCTS_BASE_PATH + `search?name=${name}`)).data;
+}
+
 export {
-    getProduct
+    getProduct, search
 };

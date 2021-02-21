@@ -5,6 +5,7 @@ import './ProductList.css'
 import { withRouter } from "react-router";
 import Product from "../Product/Product";
 import PropTypes from 'prop-types';
+import Search from "../Search/Search";
 
 
 class ProductList extends React.Component {
@@ -19,6 +20,7 @@ class ProductList extends React.Component {
         this.handleOnDelete = this.handleOnDelete.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
         this.handleOnEdit = this.handleOnEdit.bind(this);
+        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount() {
@@ -63,6 +65,12 @@ class ProductList extends React.Component {
         this.props.history.push('/products/' + id);
     }
 
+    refresh(items){
+        this.setState({
+            products : items
+        })
+    }
+
     renderRows() {
         return this.state.products.map(element => {
             return(
@@ -88,6 +96,7 @@ class ProductList extends React.Component {
                 <div className={'add-product-button-container'}>
                     <Button className={'add-product-button'} color={'success'} onClick={this.handleAdd}>Dodaj produkt</Button>
                 </div>
+                <Search onReloadItems={this.refresh} />
                 <Table hover>
                     <thead>
                     <tr>

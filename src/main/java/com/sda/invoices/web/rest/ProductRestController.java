@@ -3,6 +3,7 @@ package com.sda.invoices.web.rest;
 import com.sda.invoices.domain.product.Product;
 import com.sda.invoices.domain.product.ProductService;
 import com.sda.invoices.web.dto.ProductDto;
+import com.sda.invoices.web.dto.ProductSearchDto;
 import com.sda.invoices.web.mapper.ProductMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,14 @@ public class ProductRestController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable("id") Long id){
         return ResponseEntity.ok(productMapper.toDto(productService.findById(id)));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductDto>> search(@RequestParam("name") String name){
+        ProductSearchDto dto = new ProductSearchDto(name);
+        return ResponseEntity.ok(productService.search(dto).stream()
+                .map(productMapper::toDto)
+                .collect(Collectors.toList()));
     }
 
     private ResponseEntity<ProductDto> save(ProductDto dto) {

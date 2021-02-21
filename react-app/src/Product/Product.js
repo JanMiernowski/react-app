@@ -1,7 +1,7 @@
 import React from "react";
 import {VAT} from "../Constants";
 import axios from "axios";
-import {Button, Form, FormGroup, Input, Label, Col} from "reactstrap";
+import {Col, Form, FormGroup, Input, Label} from "reactstrap";
 import {withRouter} from "react-router";
 import {getProduct} from "../Common/Api"
 

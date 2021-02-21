@@ -9,6 +9,8 @@ import ProductList from "../ProductList/ProductList";
 import  { BrowserRouter, Link} from "react-router-dom";
 import Route from "react-router-dom/Route";
 import Message from "../Message/Message";
+import NavMenu from "../NavMenu/NavMenu";
+import ReactDOM from "react-dom";
 
 class App extends React.Component{
 
@@ -42,16 +44,7 @@ class App extends React.Component{
     render(){
         return(
             <BrowserRouter>
-                <div>
-                    <ul>
-                        <li>
-                            <Link to={'/'}>Strona główna</Link>
-                        </li>
-                        <li>
-                            <Link to={'/products'}>Produkty</Link>
-                        </li>
-                    </ul>
-                </div>
+                <NavMenu/>
                 <Message
                     color={this.state.message.isError === true ? 'danger' : 'success'}
                     visible={this.state.message.visible}
