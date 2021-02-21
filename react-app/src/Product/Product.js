@@ -1,9 +1,9 @@
 import React from "react";
-import VAT from "../Constants";
+import {VAT} from "../Constants";
 import axios from "axios";
 import {Button, Form, FormGroup, Input, Label, Col} from "reactstrap";
 import {withRouter} from "react-router";
-
+import {getProduct} from "../Common/Api"
 
 class Product extends React.Component {
     constructor(props) {
@@ -27,9 +27,9 @@ class Product extends React.Component {
     async componentDidMount() {
         if(this.state.id){
             try{
-                const response = await axios.get(`http://localhost:8080/products/${this.state.id}`);
+                const data = await getProduct(this.state.id);
                 this.setState({
-                    ...response.data
+                    ...data
                     }
                 )
             }catch (error){
@@ -41,7 +41,6 @@ class Product extends React.Component {
 
     async handleOnSubmit(event) {
         event.preventDefault();
-
         try {
             let savedProduct;
             if(this.state.id){
@@ -99,10 +98,8 @@ class Product extends React.Component {
         );
     }
 
-
     render() {
         return (
-
             <div className={'login-form'}>
                 <Form onSubmit={this.handleOnSubmit}>
 

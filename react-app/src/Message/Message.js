@@ -1,5 +1,6 @@
 import React from "react";
 import {Alert} from "reactstrap";
+import PropTypes from 'prop-types';
 
 class Message extends React.Component{
 
@@ -10,6 +11,17 @@ class Message extends React.Component{
             </Alert>
         );
     }
+}
+
+Message.propTypes = {
+    color : PropTypes.string.isRequired,
+    visible : PropTypes.bool.isRequired,
+    content : PropTypes.string.isRequired,
+    onDismiss : PropTypes.func.isRequired
+}
+
+Message.defaultProps = {
+    color : 'success',
 }
 
 export default Message;

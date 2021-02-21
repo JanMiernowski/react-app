@@ -25,14 +25,10 @@ class App extends React.Component{
 
         this.state = {...this.initialState};
 
-        this.onProductSaveOrUpdate = this.onProductSaveOrUpdate.bind(this);
+        this.onShowMessage = this.onShowMessage.bind(this);
     }
 
-
-
-
-
-    onProductSaveOrUpdate(data){
+    onShowMessage(data){
         this.setState({
             message : {
                 isError : data.isError,
@@ -64,12 +60,19 @@ class App extends React.Component{
                     })}
                     content={this.state.message.content}
                 />
-                <Route exact path={'/products'} component={ProductList}  />
+
+                <Route
+                    exact
+                    path={'/products'}
+                    render={() =>
+                        <ProductList onDelete={this.onShowMessage}/>
+                    }
+                />
                 <Route
                     exact
                     path={['/products/add','/products/:productId']}
                     render={() =>
-                        <Product onSave={this.onProductSaveOrUpdate} />
+                        <Product onSave={this.onShowMessage} />
                     }
                 />
 

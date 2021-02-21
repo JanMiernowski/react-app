@@ -4,6 +4,8 @@ import {Table, Button} from "reactstrap";
 import './ProductList.css'
 import { withRouter } from "react-router";
 import Product from "../Product/Product";
+import PropTypes from 'prop-types';
+
 
 class ProductList extends React.Component {
 
@@ -38,8 +40,16 @@ class ProductList extends React.Component {
         try{
             const response = await axios.delete('http://localhost:8080/products/' + id);
             this.getProducts();
+            this.props.onDelete({
+                message : `Produkt o id ${id} został pomyślnie usunięty`,
+                isError : false
+            })
             console.info(response);
         }catch (error){
+            this.props.onDelete({
+                message : `Produkt o id ${id} nie został usunięty ${error}`,
+                isError : true
+            })
             console.error(error);
         }
     }
@@ -48,14 +58,12 @@ class ProductList extends React.Component {
         this.props.history.push('/products/add');
     }
 
-
     handleOnEdit(event) {
         const id = event.target.getAttribute('selectedid');
         this.props.history.push('/products/' + id);
     }
 
     renderRows() {
-
         return this.state.products.map(element => {
             return(
                 <tr>
@@ -75,14 +83,6 @@ class ProductList extends React.Component {
     }
 
     render() {
-        /*
-        private Long id;
-    private String name;
-    private String description;
-    private BigDecimal priceNet;
-    private Product.Vat vat;
-         */
-
         return (
             <div>
                 <div className={'add-product-button-container'}>
@@ -106,7 +106,10 @@ class ProductList extends React.Component {
             </div>
         );
     }
+}
 
+ProductList.propTypes = {
+    onDelete : PropTypes.func.isRequired
 }
 
 export default withRouter(ProductList);
