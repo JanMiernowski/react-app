@@ -15,6 +15,9 @@ class ProductList extends React.Component {
         this.state = {
             products: [],
         }
+       this.handleAdd = this.handleAdd.bind(this);
+       this.handleOnDelete = this.handleOnDelete.bind(this);
+       this.handleOnEdit = this.handleOnEdit.bind(this);
     }
 
     componentDidMount() {
@@ -55,8 +58,8 @@ class ProductList extends React.Component {
     }
 
     handleOnEdit(event) {
-        const id = event.target.getAttribute('selectedid');
-        this.props.history.push('/products/' + id);
+        const id = event.target.attributes.selectedid.value;
+        this.props.history.push('/products/edit/' + id);
     }
 
     refresh(items){

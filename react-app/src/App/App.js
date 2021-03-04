@@ -61,7 +61,7 @@ class App extends React.Component{
                 />
                 <Route
                     exact
-                    path={['/products/add','/products/:productId']}
+                    path={['/products/add','/products/edit/:productId']}
                     render={() =>
                         <Product onSave={this.onShowMessage} />
                     }

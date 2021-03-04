@@ -23,7 +23,7 @@ async function getNaturalPersonList(){
 }
 
 async function getNaturalPersonBydId(id){
-    return (await axios.get(CONTRACTOR_BASE_PATH + '/getNaturalPersonById/' + id)).data;
+    return (await axios.get(CONTRACTOR_BASE_PATH + 'getNaturalPersonById/' + id)).data;
 }
 export {
     getProduct, search, getContactorsList, getNaturalPersonList, getNaturalPersonBydId,
