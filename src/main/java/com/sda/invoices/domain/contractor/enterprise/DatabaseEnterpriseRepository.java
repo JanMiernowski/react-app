@@ -35,6 +35,11 @@ public class DatabaseEnterpriseRepository implements EnterpriseRepository {
     }
 
     @Override
+    public List<Enterprise> findAll() {
+        return jpaEnterpriseRepository.findAll();
+    }
+
+    @Override
     public List<Enterprise> findAllEnterprises() {
         return jpaEnterpriseRepository.findAll();
     }
