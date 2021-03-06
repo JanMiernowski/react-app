@@ -12,11 +12,16 @@ class NaturalPerson extends Component {
         super(props);
 
         this.state = {
-            personName: '',
-            email: '',
-            bank: '',
-            address: '',
-            personalIdentityNumber: '',
+            personName: null,
+            email: null,
+            bank: null,
+            address: {
+                street: null,
+                city: null,
+                zipCode: null,
+                houseNumber: null
+            },
+            personalIdentityNumber: null,
             id: props.match.params.naturalPersonId,
         }
 
@@ -60,7 +65,20 @@ class NaturalPerson extends Component {
 
     }
 
+    //todo homework do przemyslenia
     handleOnChange(event) {
+        if(event.target.name === 'street' ||
+            event.target.name === 'houseNumber' ||
+            event.target.name === 'zipCode' ||
+            event.target.name === 'city'
+            ){
+            this.setState({
+                address : {
+                    ...this.state.address,
+                    [event.target.name]: event.target.value
+                }
+            })
+        }
         this.setState({
             [event.target.name]: event.target.value,
         });
@@ -87,10 +105,24 @@ class NaturalPerson extends Component {
                         <Input name={'bank'} value={this.state.bank} onChange={this.handleOnChange}/>
                     </Label>
 
+                    <h2>Adres:</h2>
                     <Label>
-                        <h2 className={'text-center'}>Adres:</h2>
-                        <Input name={'address'} value={this.state.address} onChange={this.handleOnChange}/>
+                        <h2 className={'text-center'}>Ulica:</h2>
+                        <Input name={'street'} value={this.state.address.street} onChange={this.handleOnChange}/>
                     </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Numer domu:</h2>
+                        <Input name={'houseNumber'} value={this.state.address.houseNumber} onChange={this.handleOnChange}/>
+                    </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Ulica:</h2>
+                        <Input name={'zipCode'} value={this.state.address.zipCode} onChange={this.handleOnChange}/>
+                    </Label>
+                    <Label>
+                        <h2 className={'text-center'}>Miasto:</h2>
+                        <Input name={'city'} value={this.state.address.city} onChange={this.handleOnChange}/>
+                    </Label>
+
 
                     <Label>
                         <h2 className={'text-center'}>PESEL:</h2>

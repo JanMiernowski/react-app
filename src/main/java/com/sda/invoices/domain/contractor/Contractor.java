@@ -1,9 +1,6 @@
 package com.sda.invoices.domain.contractor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class Contractor {
@@ -13,12 +10,13 @@ public abstract class Contractor {
     private Long id;
     private String email;
     private String bank;
-    private String address;
+    @Embedded
+    private Address address;
 
     public Contractor() {
     }
 
-    public Contractor(Long id, String email, String bank, String address) {
+    public Contractor(Long id, String email, String bank, Address address) {
         this.id = id;
         this.email = email;
         this.bank = bank;
@@ -37,7 +35,7 @@ public abstract class Contractor {
         return this.bank;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return this.address;
     }
 
@@ -53,7 +51,7 @@ public abstract class Contractor {
         this.bank = bank;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 }

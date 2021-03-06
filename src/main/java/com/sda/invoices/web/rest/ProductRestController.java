@@ -5,7 +5,6 @@ import com.sda.invoices.domain.product.ProductService;
 import com.sda.invoices.web.dto.ProductDto;
 import com.sda.invoices.web.dto.ProductSearchDto;
 import com.sda.invoices.web.mapper.ProductMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +14,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
-@AllArgsConstructor
 public class ProductRestController {
 
     private final ProductService productService;
     private final ProductMapper productMapper = ProductMapper.INSTANCE;
+
+    public ProductRestController(ProductService productService) {
+        this.productService = productService;
+    }
 
 
     @PostMapping

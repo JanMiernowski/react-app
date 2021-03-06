@@ -1,16 +1,18 @@
 package com.sda.invoices.domain.contractor.enterprise;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseEnterpriseRepository implements EnterpriseRepository {
 
     private final JpaEnterpriseRepository jpaEnterpriseRepository;
+
+    public DatabaseEnterpriseRepository(JpaEnterpriseRepository jpaEnterpriseRepository) {
+        this.jpaEnterpriseRepository = jpaEnterpriseRepository;
+    }
 
     @Override
     public Enterprise addToDatabase(Enterprise enterprise) {

@@ -5,9 +5,9 @@ public abstract class ContractorDto {
     private Long id;
     private String email;
     private String bank;
-    private String address;
+    private AddressDto address;
 
-    public ContractorDto(Long id, String email, String bank, String address) {
+    public ContractorDto(Long id, String email, String bank, AddressDto address) {
         this.id = id;
         this.email = email;
         this.bank = bank;
@@ -29,7 +29,7 @@ public abstract class ContractorDto {
         return this.bank;
     }
 
-    public String getAddress() {
+    public AddressDto getAddress() {
         return this.address;
     }
 
@@ -45,7 +45,7 @@ public abstract class ContractorDto {
         this.bank = bank;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(AddressDto address) {
         this.address = address;
     }
 }
