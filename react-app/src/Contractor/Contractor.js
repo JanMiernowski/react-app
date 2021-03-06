@@ -46,15 +46,11 @@ class Contractor extends React.Component{
 
 
     render() {
-
-
         return(
             <div>
                 {this.renderContractorType()}
                 {this.state.contractorType === this.naturalPerson ? <NaturalPerson /> : <Enterprise />}
             </div>
-
-
         );
     }
 }

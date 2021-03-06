@@ -1,16 +1,14 @@
-import logo from '../logo.svg';
 import './App.css';
 import React from 'react';
-import Ticker from "../Ticker/Ticker";
 import Product from "../Product/Product";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Contractor from "../Contractor/Contractor";
 import ProductList from "../ProductList/ProductList";
-import  { BrowserRouter, Link} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Route from "react-router-dom/Route";
 import Message from "../Message/Message";
 import NavMenu from "../NavMenu/NavMenu";
-import ReactDOM from "react-dom";
+import NaturalPerson from "../NaturalPerson/NaturalPerson";
+import NaturalPersonList from "../NaturalPersonList/NaturalPersonList";
 
 class App extends React.Component{
 
@@ -63,11 +61,26 @@ class App extends React.Component{
                 />
                 <Route
                     exact
-                    path={['/products/add','/products/:productId']}
+                    path={['/products/add','/products/edit/:productId']}
                     render={() =>
                         <Product onSave={this.onShowMessage} />
                     }
                 />
+                <Route
+                    exact
+                    path={'/contractor/showAllNaturalPersonList'}
+                    render={() =>
+                        <NaturalPersonList onDelete={this.onShowMessage} />
+                    }
+                />
+                <Route
+                    exact
+                    path={['/contractor/naturalPerson/add', '/contractor/naturalPerson/edit/:naturalPersonId']}
+                    render={() =>
+                        <NaturalPerson onSave={this.onShowMessage}/>
+                    }
+                />
+
 
             </BrowserRouter>
         );

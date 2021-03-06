@@ -1,20 +1,13 @@
 import React, {Component} from "react";
 import {Button, Form, FormGroup, Input, Label} from "reactstrap";
 import axios from "axios";
+import {withRouter} from "react-router";
+import {getNaturalPersonBydId} from "../Common/Api"
+import {getProduct} from "../Common/Api";
 
 
 
 class NaturalPerson extends Component {
-
-    /*
-    private Long id;
-    private String email;
-    private String bank;
-    private String address;
-    private String personName;
-    private String personalIdentityNumber;
-     */
-
     constructor(props) {
         super(props);
 
@@ -24,21 +17,47 @@ class NaturalPerson extends Component {
             bank: '',
             address: '',
             personalIdentityNumber: '',
+            id: props.match.params.naturalPersonId,
         }
 
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
     }
 
+    async componentDidMount() {
+        if(this.state.id){
+            try{
+                const data = await getNaturalPersonBydId(this.state.id);
+                this.setState({
+                        ...data
+                    }
+                )
+            }catch (error){
+                console.error(error);
+            }
+        }
+        // if(!this.state.id){ }
+    }
+
     async handleOnSubmit(event) {
         event.preventDefault(); //nie wiem co to
+        let savedPerson;
         try {
-            const savedPerson = await axios.post('http://localhost:8080/contractor/addNaturalPerson', this.state);
-            alert('saved narular person ' + savedPerson.data.personName);
+            savedPerson = await axios.post('http://localhost:8080/contractor/addNaturalPerson', this.state);
             console.info('narutal person ', savedPerson.data);
+            this.props.onSave({
+                message : `Osoby prywatna o id ${savedPerson.data.id} została pomyślnie zapisana`,
+                isError : false
+            })
         } catch (error) {
+            this.props.onSave({
+                message : `Osoby prywatna o id ${savedPerson.data.id} nie została pomyślnie zapisana`,
+                isError : true
+            })
             console.error(error);
         }
+        this.props.history.push('/contractor/showAllNaturalPersonList');
+
     }
 
     handleOnChange(event) {
@@ -86,4 +105,4 @@ class NaturalPerson extends Component {
     }
 }
 
-export default NaturalPerson;
+export default withRouter(NaturalPerson);

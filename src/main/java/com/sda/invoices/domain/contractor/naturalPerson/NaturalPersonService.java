@@ -4,6 +4,8 @@ import com.sda.invoices.web.dto.NaturalPersonDto;
 import com.sda.invoices.web.mapper.NaturalPersonMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NaturalPersonService {
 
@@ -31,5 +33,9 @@ public class NaturalPersonService {
 
     public void updateNaturalPerson(NaturalPersonDto dto){
         databaseContractorRepository.update(naturalPersonMapper.toEntity(dto));
+    }
+
+    public List<NaturalPerson> findAllNaturalPersons() {
+        return databaseContractorRepository.findAll();
     }
 }
