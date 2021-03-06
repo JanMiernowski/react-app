@@ -2,6 +2,7 @@ package com.sda.invoices.domain.product;
 
 import com.sda.invoices.web.dto.ProductSearchDto;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.util.StringUtils;
 
 public class ProductSpecifications {
 
@@ -9,11 +10,10 @@ public class ProductSpecifications {
 
 
         return (Specification<Product>) (root, criteriaQuery, criteriaBuilder) -> {
-            if (!dto.getName().isBlank()) {
+            if (!StringUtils.hasLength(dto.getName())) {
                 return criteriaBuilder.like(root.get("name"), dto.getName());
             }
             return null;
         };
     }
-
 }
