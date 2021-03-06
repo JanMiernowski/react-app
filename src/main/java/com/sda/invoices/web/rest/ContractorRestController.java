@@ -5,7 +5,6 @@ import com.sda.invoices.domain.contractor.naturalPerson.NaturalPersonService;
 import com.sda.invoices.web.dto.EnterpriseDto;
 import com.sda.invoices.web.dto.NaturalPersonDto;
 import com.sda.invoices.web.mapper.NaturalPersonMapper;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +14,16 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/contractor")
-@AllArgsConstructor
 public class ContractorRestController {
 
     private final EnterpriseService enterpriseService;
     private final NaturalPersonService naturalPersonService;
     private final NaturalPersonMapper naturalPersonMapper = NaturalPersonMapper.INSTANCE;
+
+    public ContractorRestController(EnterpriseService enterpriseService, NaturalPersonService naturalPersonService) {
+        this.enterpriseService = enterpriseService;
+        this.naturalPersonService = naturalPersonService;
+    }
 
 
     @PostMapping("/addEnterprise")

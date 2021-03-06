@@ -1,16 +1,18 @@
 package com.sda.invoices.domain.contractor.naturalPerson;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
 public class DatabaseNaturalPersonRepository implements NaturalPersonRepository{
 
     private final JpaNaturalPersonRepository jpaNaturalPersonRepository;
+
+    public DatabaseNaturalPersonRepository(JpaNaturalPersonRepository jpaNaturalPersonRepository) {
+        this.jpaNaturalPersonRepository = jpaNaturalPersonRepository;
+    }
 
     @Override
     public NaturalPerson addToDatabase(NaturalPerson naturalPerson) {

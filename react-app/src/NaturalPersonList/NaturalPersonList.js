@@ -38,7 +38,6 @@ class NaturalPersonList extends React.Component {
                 <th>{element.id}</th>
                 <th>{element.email}</th>
                 <th>{element.bank}</th>
-                <th>{element.address}</th>
                 <th>{element.personName}</th>
                 <th>{element.personalIdentityNumber}</th>
                 <td>
@@ -97,7 +96,6 @@ class NaturalPersonList extends React.Component {
                         <th>Id</th>
                         <th>Email</th>
                         <th>Bank</th>
-                        <th>Address</th>
                         <th>Person Name</th>
                         <th>Personal Identity Number</th>
                         <th/>

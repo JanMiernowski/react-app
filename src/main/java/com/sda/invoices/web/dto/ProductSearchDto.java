@@ -1,14 +1,15 @@
 package com.sda.invoices.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
 public class ProductSearchDto {
 
     private final String name;
 
 
+    public ProductSearchDto(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return this.name;
+    }
 }
