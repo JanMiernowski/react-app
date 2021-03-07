@@ -17,14 +17,14 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .cors().disable()
                 .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
-                .authorizeRequests().anyRequest().permitAll()
-                .and()
-                .httpBasic();
+                .authorizeRequests().anyRequest().permitAll();
     }
 }
