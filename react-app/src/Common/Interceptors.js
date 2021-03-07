@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getAuth} from "./LocalStorageService";
+import {getAuth, setAuth} from "./LocalStorageService";
 
 
 function registerInterceptors()
@@ -15,6 +15,23 @@ function registerInterceptors()
         },
         (error) => {
             return Promise.reject(error);
+        }
+    );
+
+    axios.interceptors.response.use(
+        (config) => {
+            const auth = getAuth();
+            const authHeader = config.headers.Authorization;
+            if(authHeader){
+                auth.token = authHeader.substring(7);
+                setAuth(auth);
+            }
+            if(config.status===401){
+                window.location.href='/login';
+            }
+            return config;
+        },(error )=> {
+        return Promise.reject(error);
         }
     );
 }

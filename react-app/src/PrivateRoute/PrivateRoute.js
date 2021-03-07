@@ -4,7 +4,7 @@ import {Route, Redirect} from "react-router-dom";
 import {getAuth} from "../Common/LocalStorageService";
 
 
-function PrivateRoute(...props) {
+function PrivateRoute(props) {
     const authItem = getAuth();
 
     if (authItem && authItem.token && authItem.username) {

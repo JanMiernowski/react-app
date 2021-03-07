@@ -11,6 +11,7 @@ import NaturalPersonList from "../NaturalPersonList/NaturalPersonList";
 import Login from "../Login/Login";
 import { registerInterceptors } from "../Common/Interceptors";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import {withRouter} from "react-router";
 
 class App extends React.Component {
 
