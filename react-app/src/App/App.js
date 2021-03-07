@@ -3,8 +3,7 @@ import React from 'react';
 import Product from "../Product/Product";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ProductList from "../ProductList/ProductList";
-import {BrowserRouter} from "react-router-dom";
-import Route from "react-router-dom/Route";
+import {Route, Switch, BrowserRouter} from "react-router-dom";
 import Message from "../Message/Message";
 import NavMenu from "../NavMenu/NavMenu";
 import NaturalPerson from "../NaturalPerson/NaturalPerson";
@@ -56,7 +55,7 @@ class App extends React.Component {
                         })}
                         content={this.state.message.content}
                     />
-
+                    <Switch>
                     <PrivateRoute
                         exact
                         path={'/products'}
@@ -92,6 +91,7 @@ class App extends React.Component {
                             <Login/>
                         }
                     />
+                    </Switch>
                 </BrowserRouter>
             </div>
         );
