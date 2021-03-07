@@ -2,23 +2,33 @@ import React from "react";
 import {withRouter} from "react-router";
 import {Col, Form, FormGroup, Input, Label} from "reactstrap";
 import axios from "axios";
+import  {login} from "../Common/Api";
+import {setAuth} from "../Common/LocalStorageService";
 
 class Login extends React.Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            login: '',
+            username: '',
             password: ''
         }
+
+        this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
 
     async handleOnSubmit(event) {
         event.preventDefault();
-
+        try{
+            const response = await login(this.state);
+            setAuth(response);
+            this.props.history.push('/');
+        }catch (error){
+            console.error(error);
+        }
     }
 
-    handleOnChange(event) {
+    handleOnChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value,
         });
@@ -30,9 +40,9 @@ class Login extends React.Component{
                 <Form onSubmit={this.handleOnSubmit}>
                     <h2>Zaloguj się</h2>
                     <FormGroup row>
-                        <Label sm={3} for={'login'}>Użytkownik:</Label>
+                        <Label sm={3} for={'username'}>Użytkownik:</Label>
                         <Col sm={9}>
-                            <Input name={'login'} value={this.state.login} onChange={this.handleOnChange}/>
+                            <Input name={'username'} value={this.state.username} onChange={this.handleOnChange}/>
                         </Col>
                     </FormGroup>
 
