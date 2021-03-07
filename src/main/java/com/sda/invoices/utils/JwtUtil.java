@@ -26,7 +26,7 @@ public class JwtUtil {
         return getClaims(token).getExpiration().before(new Date());
     }
 
-    public String createToken(String username){
+    public String generateToken(String username){
         return Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_IN_MILLIS))

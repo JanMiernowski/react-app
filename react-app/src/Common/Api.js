@@ -3,6 +3,7 @@ import {SERVER_URL} from "../Constants";
 
 const PRODUCTS_BASE_PATH = SERVER_URL + "products/";
 const CONTRACTOR_BASE_PATH = SERVER_URL + "contractor/";
+const AUTHENTICATION_BASE_PATH = SERVER_URL + "authenticate/";
 
 async function getProduct(id){
    return (await axios.get(PRODUCTS_BASE_PATH + id)).data;
@@ -25,6 +26,11 @@ async function getNaturalPersonList(){
 async function getNaturalPersonBydId(id){
     return (await axios.get(CONTRACTOR_BASE_PATH + 'getNaturalPersonById/' + id)).data;
 }
+
+async function login(loginRequest) {
+    return (await axios.post(AUTHENTICATION_BASE_PATH, loginRequest)).data;
+}
+
 export {
-    getProduct, search, getContactorsList, getNaturalPersonList, getNaturalPersonBydId,
+    getProduct, search, getContactorsList, getNaturalPersonList, getNaturalPersonBydId, login
 };
