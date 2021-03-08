@@ -12,7 +12,7 @@ import java.util.Date;
 public class JwtUtil {
 
     private final String secret;
-    private static final long EXPIRATION_IN_MILLIS = 60*60*1000;
+    private static final long EXPIRATION_IN_MILLIS = 1 * 60 * 1000;
 
     public JwtUtil(@Value("${jwt.token.secret}") String secret) {
         this.secret = secret;
