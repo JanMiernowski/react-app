@@ -9,9 +9,11 @@ import NavMenu from "../NavMenu/NavMenu";
 import NaturalPerson from "../NaturalPerson/NaturalPerson";
 import NaturalPersonList from "../NaturalPersonList/NaturalPersonList";
 import Login from "../Login/Login";
+import Home from '../Home/Home';
 import { registerInterceptors } from "../Common/Interceptors";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import {withRouter} from "react-router";
+import {getAuth} from "../Common/LocalStorageService";
 
 class App extends React.Component {
 
@@ -43,11 +45,17 @@ class App extends React.Component {
         console.log(data);
     }
 
+    renderMainMenu = () => {
+        const auth = getAuth();
+        return auth && auth.token && auth.username ?
+            <NavMenu/> : null;
+    }
+
     render() {
         return (
             <div>
                 <BrowserRouter>
-                    <NavMenu/>
+                    {this.renderMainMenu()}
                     <Message
                         color={this.state.message.isError === true ? 'danger' : 'success'}
                         visible={this.state.message.visible}
@@ -57,41 +65,48 @@ class App extends React.Component {
                         content={this.state.message.content}
                     />
                     <Switch>
-                    <PrivateRoute
-                        exact
-                        path={'/products'}
-                        render={() =>
-                            <ProductList onDelete={this.onShowMessage}/>
-                        }
-                    />
-                    <PrivateRoute
-                        exact
-                        path={['/products/add', '/products/edit/:productId']}
-                        render={() =>
-                            <Product onSave={this.onShowMessage}/>
-                        }
-                    />
-                    <PrivateRoute
-                        exact
-                        path={'/contractor/showAllNaturalPersonList'}
-                        render={() =>
-                            <NaturalPersonList onDelete={this.onShowMessage}/>
-                        }
-                    />
-                    <PrivateRoute
-                        exact
-                        path={['/contractor/naturalPerson/add', '/contractor/naturalPerson/edit/:naturalPersonId']}
-                        render={() =>
-                            <NaturalPerson onSave={this.onShowMessage}/>
-                        }
-                    />
-                    <Route
-                        exact
-                        path={'/login'}
-                        render={() =>
-                            <Login/>
-                        }
-                    />
+                        <PrivateRoute
+                            exact
+                            path={'/'}
+                            render={() =>
+                                <Home/>
+                            }
+                        />
+                        <PrivateRoute
+                            exact
+                            path={'/products'}
+                            render={() =>
+                                <ProductList onDelete={this.onShowMessage}/>
+                            }
+                        />
+                        <PrivateRoute
+                            exact
+                            path={['/products/add', '/products/edit/:productId']}
+                            render={() =>
+                                <Product onSave={this.onShowMessage}/>
+                            }
+                        />
+                        <PrivateRoute
+                            exact
+                            path={'/contractor/showAllNaturalPersonList'}
+                            render={() =>
+                                <NaturalPersonList onDelete={this.onShowMessage}/>
+                            }
+                        />
+                        <PrivateRoute
+                            exact
+                            path={['/contractor/naturalPerson/add', '/contractor/naturalPerson/edit/:naturalPersonId']}
+                            render={() =>
+                                <NaturalPerson onSave={this.onShowMessage}/>
+                            }
+                        />
+                        <Route
+                            exact
+                            path={'/login'}
+                            render={() =>
+                                <Login/>
+                            }
+                        />
                     </Switch>
                 </BrowserRouter>
             </div>

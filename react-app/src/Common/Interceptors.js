@@ -7,7 +7,7 @@ function registerInterceptors()
     axios.interceptors.request.use(
         (config) => {
             const authItem = getAuth();
-            const token = authItem ? authItem.token : null;
+            const token = authItem && authItem.token ? authItem.token : null;
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;
             }
@@ -23,6 +23,7 @@ function registerInterceptors()
             return config;
         },(error )=> {
             if(error.response.status===401){
+                setAuth(null);
                 window.location.href='/login';
             }
             return Promise.reject(error);
@@ -31,4 +32,3 @@ function registerInterceptors()
 }
 
 export {registerInterceptors};
-
