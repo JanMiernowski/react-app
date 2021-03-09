@@ -45,17 +45,11 @@ class App extends React.Component {
         console.log(data);
     }
 
-    renderMainMenu = () => {
-        const auth = getAuth();
-        return auth && auth.token && auth.username ?
-            <NavMenu/> : null;
-    }
-
     render() {
         return (
             <div>
                 <BrowserRouter>
-                    {this.renderMainMenu()}
+                    <NavMenu/>
                     <Message
                         color={this.state.message.isError === true ? 'danger' : 'success'}
                         visible={this.state.message.visible}

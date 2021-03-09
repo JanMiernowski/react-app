@@ -1,13 +1,11 @@
 import React from "react";
 
 import {Route, Redirect} from "react-router-dom";
-import {getAuth} from "../Common/LocalStorageService";
+import {isLogged} from "../Common/LocalStorageService";
 
 
 function PrivateRoute(props) {
-    const authItem = getAuth();
-
-    if (authItem && authItem.token && authItem.username) {
+    if (isLogged()) {
         return <Route {...props} />;
     } else {
         return <Redirect to='/login'/>

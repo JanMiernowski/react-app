@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getAuth, setAuth} from "./LocalStorageService";
+import {getAuth, setAuth, isLogged} from "./LocalStorageService";
 
 
 function registerInterceptors()
@@ -7,7 +7,7 @@ function registerInterceptors()
     axios.interceptors.request.use(
         (config) => {
             const authItem = getAuth();
-            const token = authItem && authItem.token ? authItem.token : null;
+            const token = isLogged() ? authItem.token : null;
             if (token) {
                 config.headers.Authorization = 'Bearer ' + token;
             }
