@@ -20,8 +20,8 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
-    private final JwtUtil jwtUtil;
 
+    private final JwtUtil jwtUtil;
     private final UserDetailsService jwtUserDetailsService;
 
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
@@ -35,11 +35,10 @@ public class JwtFilter extends OncePerRequestFilter {
             // if token is expired, please log in again
             if (jwtUtil.isExpired(token)) {
                 httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-
                 return;
             }
             final String username = jwtUtil.getUsername(token);
-            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 httpServletResponse.addHeader("Authorization", "Bearer " + token);
 
                 // if token is correct, log in user into SecurityContext

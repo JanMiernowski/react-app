@@ -3,7 +3,8 @@ import {withRouter} from "react-router";
 import {Col, Form, FormGroup, Input, Label} from "reactstrap";
 import axios from "axios";
 import  {login} from "../Common/Api";
-import {setAuth} from "../Common/LocalStorageService";
+import {setAuth, isLogged} from "../Common/LocalStorageService";
+import { Formik } from 'formik';
 
 class Login extends React.Component{
     constructor(props) {
@@ -13,6 +14,10 @@ class Login extends React.Component{
             username: '',
             password: ''
         }
+        if(isLogged()){
+            this.props.history.goBack();
+        }
+        this.props.handleLogIn(false);
 
         this.handleOnSubmit = this.handleOnSubmit.bind(this);
     }
@@ -22,6 +27,7 @@ class Login extends React.Component{
         try{
             const response = await login(this.state);
             setAuth(response);
+            this.props.handleLogIn(true);
             this.props.history.push('/');
         }catch (error){
             console.error(error);

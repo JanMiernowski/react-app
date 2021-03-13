@@ -8,12 +8,12 @@ import Message from "../Message/Message";
 import NavMenu from "../NavMenu/NavMenu";
 import NaturalPerson from "../NaturalPerson/NaturalPerson";
 import NaturalPersonList from "../NaturalPersonList/NaturalPersonList";
-import Login from "../Login/Login";
+import LoginFormik from "../LoginFormik/LoginFormik";
 import Home from '../Home/Home';
 import { registerInterceptors } from "../Common/Interceptors";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import {withRouter} from "react-router";
-import {getAuth} from "../Common/LocalStorageService";
+import {isLogged} from "../Common/LocalStorageService";
 
 class App extends React.Component {
 
@@ -22,7 +22,8 @@ class App extends React.Component {
             isError: null,
             visible: false,
             content: null,
-        }
+        },
+        isLogged: isLogged()
     }
 
     constructor(props) {
@@ -32,6 +33,7 @@ class App extends React.Component {
 
         registerInterceptors();
         this.onShowMessage = this.onShowMessage.bind(this);
+        this.onUserLoggedIn = this.onUserLoggedIn.bind(this);
     }
 
     onShowMessage(data) {
@@ -45,11 +47,17 @@ class App extends React.Component {
         console.log(data);
     }
 
+    onUserLoggedIn(isLogged){
+        this.setState({
+            isLogged : isLogged
+        })
+    }
+
     render() {
         return (
             <div>
                 <BrowserRouter>
-                    <NavMenu/>
+                    {this.state.isLogged ? <NavMenu /> : null}
                     <Message
                         color={this.state.message.isError === true ? 'danger' : 'success'}
                         visible={this.state.message.visible}
@@ -98,7 +106,7 @@ class App extends React.Component {
                             exact
                             path={'/login'}
                             render={() =>
-                                <Login/>
+                                <LoginFormik handleLogIn={this.onUserLoggedIn}/>
                             }
                         />
                     </Switch>
