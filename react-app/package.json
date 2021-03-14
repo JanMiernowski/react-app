@@ -18,7 +18,8 @@
     "react-scripts": "4.0.2",
     "reactstrap": "^8.9.0",
     "social-login-buttons": "^0.0.4",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,5 +45,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "react-test-renderer": "^17.0.1"
+  }
 }

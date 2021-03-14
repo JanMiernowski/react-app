@@ -1,4 +1,8 @@
 .login-form{
-    width: 40%;
+    width: 60%;
     margin: auto;
+}
+.error-form{
+    font-size: 70%;
+    color: red;
 }
